@@ -1,0 +1,75 @@
+---
+import { dj } from '../data/dj';
+---
+
+<section class="about section" id="sobre" data-act-section="sunset">
+  <div class="about__grid">
+    <div>
+      <p class="section__label reveal">{dj.aboutLabel}</p>
+      <h2 class="section__title reveal">{dj.aboutName}</h2>
+      {
+        dj.aboutBio.map((p) => (
+          <p class="about__bio reveal">{p}</p>
+        ))
+      }
+    </div>
+
+    <div class="about__stats">
+      {
+        dj.stats.map((stat) => (
+          <article class="about__stat card-surface reveal">
+            <p class="about__value font-display">{stat.value}</p>
+            <p class="about__meta">{stat.label}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .about__bio {
+    max-width: 38rem;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+  }
+
+  .about__stats {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .about__stat {
+    padding: 1.35rem 1.4rem;
+  }
+
+  .about__value {
+    margin: 0;
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent-2);
+  }
+
+  .about__meta {
+    margin: 0.45rem 0 0;
+    color: var(--fg-muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (min-width: 880px) {
+    .about__grid {
+      grid-template-columns: 1.3fr 0.7fr;
+      align-items: start;
+      gap: 3rem;
+    }
+  }
+</style>

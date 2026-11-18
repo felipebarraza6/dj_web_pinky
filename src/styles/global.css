@@ -1,0 +1,362 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* ── Fonts: Syne (display) + Sora (body) — Ibiza, not generic ── */
+@font-face {
+  font-family: "Syne";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/syne:vf@latest/latin-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/sora:vf@latest/latin-wght-normal.woff2")
+    format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Sora", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Act tokens (morphed by GSAP on :root) ── */
+:root {
+  --act-progress: 0;
+  --bg: #1a0f14;
+  --bg-deep: #0c070a;
+  --fg: #fff6ef;
+  --fg-muted: rgba(255, 246, 239, 0.68);
+  --accent: #ff6b3d;
+  --accent-2: #f4c95f;
+  --accent-soft: rgba(255, 107, 61, 0.18);
+  --surface: rgba(255, 246, 239, 0.06);
+  --border: rgba(255, 246, 239, 0.14);
+  --orb-a: #ff6b3d;
+  --orb-b: #7b3f6e;
+  --orb-c: #f4c95f;
+  --grain-opacity: 0.12;
+  --villa-wash: 0;
+  --night-depth: 0.35;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--fg);
+  background: var(--bg-deep);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 55%, transparent);
+  color: var(--fg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.site-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Atmosphere layers */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: radial-gradient(
+      120% 80% at 50% -10%,
+      color-mix(in oklab, var(--orb-a) 35%, transparent),
+      transparent 55%
+    ),
+    radial-gradient(
+      90% 70% at 100% 40%,
+      color-mix(in oklab, var(--orb-b) 28%, transparent),
+      transparent 50%
+    ),
+    radial-gradient(
+      80% 60% at 0% 80%,
+      color-mix(in oklab, var(--orb-c) 22%, transparent),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      var(--bg) 0%,
+      var(--bg-deep) 55%,
+      color-mix(in oklab, var(--bg-deep) 70%, #000) 100%
+    );
+  transition: none;
+}
+
+.atmosphere__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  will-change: transform, opacity;
+}
+
+.atmosphere__orb--a {
+  width: min(55vw, 520px);
+  height: min(55vw, 520px);
+  top: 8%;
+  left: 12%;
+  background: var(--orb-a);
+}
+
+.atmosphere__orb--b {
+  width: min(45vw, 420px);
+  height: min(45vw, 420px);
+  top: 35%;
+  right: 5%;
+  background: var(--orb-b);
+}
+
+.atmosphere__orb--c {
+  width: min(50vw, 480px);
+  height: min(50vw, 480px);
+  bottom: 5%;
+  left: 30%;
+  background: var(--orb-c);
+}
+
+.atmosphere__horizon {
+  position: absolute;
+  inset: auto 0 18% 0;
+  height: 35%;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in oklab, var(--accent) 25%, transparent) 40%,
+    color-mix(in oklab, var(--accent-2) calc(var(--villa-wash) * 35%), transparent)
+  );
+  opacity: calc(0.55 + var(--villa-wash) * 0.25);
+  mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}
+
+.atmosphere__grid {
+  position: absolute;
+  inset: 0;
+  opacity: calc(0.04 + var(--villa-wash) * 0.08);
+  background-image: linear-gradient(
+      color-mix(in oklab, var(--fg) 35%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--fg) 35%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+}
+
+.atmosphere__grain {
+  position: absolute;
+  inset: 0;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.site-content {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  position: relative;
+  padding: clamp(4.5rem, 10vw, 8rem) clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.section__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section__label::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  max-width: 14ch;
+  margin: 0 0 1rem;
+}
+
+.section__lead {
+  max-width: 38rem;
+  color: var(--fg-muted);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 3rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease, color 0.35s ease, border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #140a08;
+  box-shadow: 0 12px 40px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 16px 48px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--fg);
+  border-color: var(--border);
+}
+
+.btn--ghost:hover {
+  background: var(--surface);
+  border-color: color-mix(in oklab, var(--fg) 35%, transparent);
+}
+
+.card-surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  border-radius: 1.25rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: transform, opacity;
+}
+
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  border-block: 1px solid var(--border);
+  background: color-mix(in oklab, var(--surface) 80%, transparent);
+}
+
+.marquee__track {
+  display: inline-flex;
+  gap: 2.5rem;
+  padding: 0.9rem 0;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.marquee__item::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

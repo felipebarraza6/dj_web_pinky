@@ -1,0 +1,116 @@
+---
+import { dj } from '../data/dj';
+
+const links = [
+  { href: '#inicio', label: 'Inicio' },
+  { href: '#sobre', label: 'Sobre mí' },
+  { href: '#equipo', label: 'Equipo' },
+  { href: '#noches', label: 'Noches' },
+  { href: '#contacto', label: 'Cotización' },
+];
+---
+
+<header class="nav" data-nav>
+  <a class="nav__brand" href="#inicio" aria-label={dj.brand}>
+    <span class="nav__mark" aria-hidden="true">P</span>
+    <span class="nav__name font-display">{dj.brand}</span>
+  </a>
+
+  <nav class="nav__links" aria-label="Principal">
+    {
+      links.map((link) => (
+        <a class="nav__link" href={link.href}>
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+
+  <a class="nav__cta btn btn--primary" href="#contacto">{dj.ctaPrimary}</a>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem clamp(1.25rem, 4vw, 3.5rem);
+    background: color-mix(in oklab, var(--bg-deep) 35%, transparent);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s ease, background 0.4s ease;
+  }
+
+  .nav.is-scrolled {
+    border-bottom-color: var(--border);
+    background: color-mix(in oklab, var(--bg-deep) 72%, transparent);
+  }
+
+  .nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .nav__mark {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 0.45rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--accent);
+  }
+
+  .nav__name {
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    font-size: 0.95rem;
+  }
+
+  .nav__links {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .nav__link {
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--fg-muted);
+    transition: color 0.25s ease, background 0.25s ease;
+  }
+
+  .nav__link:hover,
+  .nav__link[aria-current='page'] {
+    color: var(--fg);
+    background: var(--surface);
+  }
+
+  .nav__cta {
+    display: none;
+    min-height: 2.5rem;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.82rem;
+  }
+
+  @media (min-width: 900px) {
+    .nav__links {
+      display: flex;
+    }
+
+    .nav__cta {
+      display: inline-flex;
+    }
+  }
+</style>

@@ -1,0 +1,15 @@
+---
+import { dj } from '../data/dj';
+
+const loop = [...dj.tracks, ...dj.tracks];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {
+      loop.map((track) => (
+        <span class="marquee__item">{track}</span>
+      ))
+    }
+  </div>
+</div>

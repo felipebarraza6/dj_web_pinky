@@ -1,0 +1,87 @@
+---
+import { dj } from '../data/dj';
+---
+
+<footer class="footer section">
+  <div class="footer__top">
+    <div>
+      <p class="footer__brand font-display">{dj.brand}</p>
+      <p class="footer__tag">{dj.tagline}</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h3>Contacto</h3>
+        <a href={`mailto:${dj.email}`}>{dj.email}</a>
+        <a href="#contacto">Cotiza tu evento</a>
+      </div>
+      <div>
+        <h3>Sígueme</h3>
+        <a href={dj.socials.instagram}>Instagram</a>
+        <a href={dj.socials.mixes}>Mixes</a>
+      </div>
+    </div>
+  </div>
+  <p class="footer__note">{dj.footerNote}</p>
+</footer>
+
+<style>
+  .footer {
+    padding-top: 3rem;
+    padding-bottom: 6rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer__top {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .footer__brand {
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+  }
+
+  .footer__tag {
+    margin: 0.4rem 0 0;
+    color: var(--fg-muted);
+  }
+
+  .footer__cols {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer__cols h3 {
+    margin: 0 0 0.7rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .footer__cols a {
+    display: block;
+    color: var(--fg-muted);
+    margin-bottom: 0.45rem;
+    transition: color 0.25s ease;
+  }
+
+  .footer__cols a:hover {
+    color: var(--fg);
+  }
+
+  .footer__note {
+    margin: 2.5rem 0 0;
+    color: color-mix(in oklab, var(--fg-muted) 80%, transparent);
+    font-size: 0.8rem;
+  }
+
+  @media (min-width: 860px) {
+    .footer__top {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

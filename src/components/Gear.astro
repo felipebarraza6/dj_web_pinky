@@ -1,0 +1,74 @@
+---
+import { dj } from '../data/dj';
+---
+
+<section class="gear section" id="equipo" data-act-section="villa">
+  <p class="section__label reveal">{dj.gearLabel}</p>
+  <h2 class="section__title reveal">{dj.gearTitle}</h2>
+
+  <div class="gear__list">
+    {
+      dj.gear.map((item, i) => (
+        <article class="gear__item card-surface reveal" style={`--i:${i}`}>
+          <span class="gear__index font-display">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3 class="gear__name font-display">{item.name}</h3>
+            <p class="gear__desc">{item.description}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .gear__list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .gear__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+    padding: 1.4rem 1.35rem;
+    transition: border-color 0.35s ease, transform 0.35s ease;
+  }
+
+  .gear__item:hover {
+    border-color: color-mix(in oklab, var(--accent) 45%, var(--border));
+    transform: translateY(-3px);
+  }
+
+  .gear__index {
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    padding-top: 0.25rem;
+  }
+
+  .gear__name {
+    margin: 0 0 0.45rem;
+    font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+    letter-spacing: -0.02em;
+  }
+
+  .gear__desc {
+    margin: 0;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    max-width: 40rem;
+  }
+
+  @media (min-width: 900px) {
+    .gear__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .gear__item {
+      grid-template-columns: 1fr;
+      min-height: 100%;
+    }
+  }
+</style>

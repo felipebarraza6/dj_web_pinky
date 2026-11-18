@@ -1,0 +1,52 @@
+---
+interface Props {
+  bars?: number;
+  class?: string;
+}
+
+const { bars = 18, class: className = '' } = Astro.props;
+const heights = Array.from({ length: bars }, (_, i) => 30 + ((i * 37) % 70));
+---
+
+<div class={`eq ${className}`} data-eq aria-hidden="true">
+  {heights.map((h, i) => <span style={`--h:${h}%; --d:${i * 0.08}s`}></span>)}
+</div>
+
+<style>
+  .eq {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.28rem;
+    height: 3.2rem;
+  }
+
+  .eq span {
+    flex: 1;
+    height: var(--h);
+    border-radius: 999px 999px 2px 2px;
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    transform-origin: bottom;
+    animation: pulse 1.1s ease-in-out infinite;
+    animation-delay: var(--d);
+    opacity: 0.85;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scaleY(0.45);
+      opacity: 0.55;
+    }
+    50% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eq span {
+      animation: none;
+      transform: scaleY(0.7);
+    }
+  }
+</style>

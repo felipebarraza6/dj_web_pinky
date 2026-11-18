@@ -1,0 +1,156 @@
+---
+import { dj } from '../data/dj';
+import MusicEQ from './MusicEQ.astro';
+---
+
+<section class="hero" id="inicio" data-act-section="sunset">
+  <div class="hero__media" aria-hidden="true">
+    <video
+      class="hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={dj.heroMedia.image}
+    >
+      <source src={dj.heroMedia.video} type="video/mp4" />
+    </video>
+    <img class="hero__fallback" src={dj.heroMedia.image} alt="" />
+    <div class="hero__veil"></div>
+  </div>
+
+  <div class="hero__inner section">
+    <div class="hero__copy">
+      <p class="section__label reveal">{dj.heroEyebrow}</p>
+      <h1 class="hero__title font-display reveal">{dj.heroTitle}</h1>
+      <p class="hero__lead reveal">{dj.heroLead}</p>
+      <div class="hero__actions reveal">
+        <a class="btn btn--primary" href="#contacto">{dj.ctaPrimary} →</a>
+        <a class="btn btn--ghost" href="#reel">{dj.ctaSecondary}</a>
+      </div>
+      <div class="hero__eq-wrap reveal">
+        <MusicEQ />
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <i></i>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__video,
+  .hero__fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.06);
+    filter: saturate(1.15) contrast(1.08) brightness(0.72);
+  }
+
+  .hero__fallback {
+    z-index: 0;
+  }
+
+  .hero__video {
+    z-index: 1;
+  }
+
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--bg-deep) 55%, transparent) 0%,
+        color-mix(in oklab, var(--bg-deep) 25%, transparent) 35%,
+        color-mix(in oklab, var(--bg-deep) 78%, transparent) 100%
+      ),
+      radial-gradient(
+        ellipse at 70% 40%,
+        color-mix(in oklab, var(--accent) 22%, transparent),
+        transparent 55%
+      );
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding-top: clamp(7rem, 14vw, 10rem);
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+  }
+
+  .hero__copy {
+    max-width: 42rem;
+  }
+
+  .hero__title {
+    margin: 0 0 1.1rem;
+    font-size: clamp(3.6rem, 14vw, 8.5rem);
+    line-height: 0.84;
+    letter-spacing: -0.05em;
+    font-weight: 800;
+    text-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero__lead {
+    max-width: 34rem;
+    margin: 0 0 1.6rem;
+    color: var(--fg-muted);
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    line-height: 1.65;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__eq-wrap {
+    max-width: 14rem;
+    opacity: 0.9;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    left: clamp(1.25rem, 4vw, 3.5rem);
+    bottom: 1.4rem;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  .hero__scroll i {
+    width: 1px;
+    height: 3rem;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    display: block;
+  }
+</style>

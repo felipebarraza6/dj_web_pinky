@@ -1,0 +1,114 @@
+---
+const acts = [
+  { id: 'sunset', label: 'Sunset' },
+  { id: 'villa', label: 'Villa' },
+  { id: 'afterhours', label: 'Afterhours' },
+];
+---
+
+<aside class="journey-hud" data-journey-hud aria-label="Viaje visual de la noche">
+  <div class="journey-hud__track" aria-hidden="true">
+    <div class="journey-hud__fill" data-journey-fill></div>
+  </div>
+  <ol class="journey-hud__acts">
+    {
+      acts.map((act) => (
+        <li>
+          <button
+            type="button"
+            class="journey-hud__act"
+            data-act-btn={act.id}
+            aria-pressed={act.id === 'sunset' ? 'true' : 'false'}
+          >
+            <span class="journey-hud__dot"></span>
+            <span>{act.label}</span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+</aside>
+
+<style>
+  .journey-hud {
+    position: fixed;
+    right: clamp(0.75rem, 2vw, 1.5rem);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 35;
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.85rem;
+    pointer-events: none;
+  }
+
+  .journey-hud__track {
+    position: absolute;
+    right: 0.55rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .journey-hud__fill {
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 12px color-mix(in oklab, var(--accent) 50%, transparent);
+  }
+
+  .journey-hud__acts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    position: relative;
+  }
+
+  .journey-hud__act {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--fg-muted);
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .journey-hud__act[aria-pressed='true'] {
+    color: var(--fg);
+  }
+
+  .journey-hud__dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: transparent;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .journey-hud__act[aria-pressed='true'] .journey-hud__dot {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 16px color-mix(in oklab, var(--accent) 60%, transparent);
+    transform: scale(1.15);
+  }
+
+  @media (min-width: 960px) {
+    .journey-hud {
+      display: flex;
+    }
+  }
+</style>

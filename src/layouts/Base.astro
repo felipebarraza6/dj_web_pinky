@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+import Atmosphere from '../components/Atmosphere.astro';
+import Nav from '../components/Nav.astro';
+import JourneyHud from '../components/JourneyHud.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { dj } from '../data/dj';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${dj.brand} | DJ demo Ibiza`,
+  description = dj.heroLead,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" data-act="sunset">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <Atmosphere />
+      <Nav />
+      <JourneyHud />
+      <main class="site-content">
+        <slot />
+      </main>
+      <WhatsAppFloat />
+    </div>
+    <script>
+      import { initJourney } from '../scripts/journey.ts';
+      initJourney();
+    </script>
+  </body>
+</html>
