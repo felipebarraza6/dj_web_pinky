@@ -128,13 +128,6 @@ function applyActMix(t: number) {
     clamped < 0.66 ? 'sunset' : clamped < 1.33 ? 'villa' : 'afterhours';
   root.dataset.act = active;
   root.style.setProperty('--act-progress', String(clamped / 2));
-
-  document.querySelectorAll<HTMLButtonElement>('[data-act-btn]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.actBtn === active ? 'true' : 'false');
-  });
-
-  const fill = document.querySelector<HTMLElement>('[data-journey-fill]');
-  if (fill) fill.style.height = `${(clamped / 2) * 100}%`;
 }
 
 function initReveals() {
@@ -180,35 +173,6 @@ function initOrbs() {
   });
 }
 
-function initDisc() {
-  const disc = document.querySelector<HTMLElement>('[data-disc]');
-  if (!disc) return;
-  gsap.to(disc, {
-    rotation: 360,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: document.body,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 1.2,
-    },
-  });
-}
-
-function initWave() {
-  const wave = document.querySelector<SVGPathElement>('[data-wave]');
-  if (!wave) return;
-  const states = [
-    'M0 40 Q 25 10 50 40 T 100 40 T 150 40 T 200 40 T 250 40 T 300 40 T 350 40 T 400 40',
-    'M0 40 Q 25 70 50 40 T 100 40 T 150 40 T 200 40 T 250 40 T 300 40 T 350 40 T 400 40',
-    'M0 40 Q 25 20 50 40 T 100 40 T 150 40 T 200 40 T 250 40 T 300 40 T 350 40 T 400 40',
-  ];
-  const tl = gsap.timeline({ repeat: -1, defaults: { duration: 1.4, ease: 'sine.inOut' } });
-  states.forEach((d) => {
-    tl.to(wave, { attr: { d } });
-  });
-}
-
 function initNav() {
   const nav = document.querySelector<HTMLElement>('[data-nav]');
   if (!nav) return;
@@ -220,18 +184,12 @@ function initNav() {
   });
 }
 
-function scrollToAct(act: ActId) {
-  const el = document.querySelector(`[data-act-section="${act}"]`);
-  if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
 export function initJourney() {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!reduced) {
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: 1.05,
       smoothWheel: true,
     });
 
@@ -242,7 +200,7 @@ export function initJourney() {
     gsap.ticker.lagSmoothing(0);
   }
 
-  // Master scrub: progress 0→2 across the page
+  // Color morph on scroll (no HUD)
   const proxy = { t: 0 };
   applyActMix(0);
 
@@ -261,8 +219,6 @@ export function initJourney() {
   if (!reduced) {
     initReveals();
     initOrbs();
-    initDisc();
-    initWave();
   } else {
     document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
       el.style.opacity = '1';
@@ -272,19 +228,11 @@ export function initJourney() {
 
   initNav();
 
-  document.querySelectorAll<HTMLButtonElement>('[data-act-btn]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.actBtn as ActId | undefined;
-      if (id) scrollToAct(id);
-    });
-  });
-
-  // Entrance
   gsap.from('.hero__title', {
-    y: 60,
+    y: 40,
     opacity: 0,
-    duration: 1.2,
+    duration: 0.9,
     ease: 'power4.out',
-    delay: 0.1,
+    delay: 0.05,
   });
 }

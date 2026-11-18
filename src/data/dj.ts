@@ -2,7 +2,8 @@
  * DJ Pinky — contenido elevado para landing tipo Rizzet.
  * Paths de media respetan `base` de Astro (GitHub Pages).
  */
-const base = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL || '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
 
 export const dj = {
