@@ -1,5 +1,5 @@
 /**
- * DJ Pinky — contenido elevado para landing tipo Rizzet.
+ * DJ Ñanky — contenido elevado para landing tipo Rizzet.
  * Paths de media respetan `base` de Astro (GitHub Pages).
  */
 const rawBase = import.meta.env.BASE_URL || '/';
@@ -7,16 +7,16 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const asset = (path: string) => `${base}${path.replace(/^\//, '')}`;
 
 export const dj = {
-  brand: 'DJ PINKY',
+  brand: 'DJ ÑANKY',
   tagline: 'DJ · Sonido · Eventos que se sienten',
   heroEyebrow: 'Fiestas · Cumpleaños · Eventos en vivo',
-  heroTitle: 'DJ Pinky',
+  heroTitle: 'DJ Ñanky',
   heroLead:
     'Armo la noche completa: sonido potente, luces que acompañan y una pista que no se cae. Desde el primer brindis hasta el último tema.',
   ctaPrimary: 'Cotiza tu evento',
   ctaSecondary: 'Mira cómo suena',
   aboutLabel: 'Un gusto',
-  aboutName: 'Pinky',
+  aboutName: 'Ñanky',
   aboutBio: [
     'Llevo años haciendo que la gente baile en fiestas, celebraciones y eventos al aire libre. No vendo una playlist genérica: leo la pista y subo o bajo según lo que pida el momento.',
     'Llego con equipo de sonido e iluminación listo para montar. Tú me cuentas el vibe; yo me encargo de que suene limpio, se vea pro y la gente se quede hasta el final.',
@@ -128,7 +128,7 @@ export const dj = {
   contactTitle: 'Cuéntame de tu evento',
   contactLead:
     'Fecha, lugar y vibe. Te respondo para armar la cotización sin compromiso.',
-  email: 'djpinky@evento.cl',
+  email: 'djnanky@evento.cl',
   whatsappLabel: 'Háblame',
   whatsappUrl: 'https://wa.me/56900000000',
   socials: {
@@ -147,7 +147,7 @@ export const dj = {
     image: asset('media/hero/booth.jpg'),
     video: asset('media/video/promo.mp4'),
   },
-  footerNote: 'DJ Pinky · Demo para revisión · 2026',
+  footerNote: 'DJ Ñanky · Demo para revisión · 2026',
 } as const;
 
 export type DjData = typeof dj;

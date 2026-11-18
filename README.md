@@ -1,6 +1,6 @@
-# DJ Pinky — Web
+# DJ Ñanky — Web
 
-Landing de alto impacto visual para **DJ Pinky** (estructura tipo [rizzet.cl](https://rizzet.cl/), morph visual Sunset → Villa → Afterhours).
+Landing de alto impacto visual para **DJ Ñanky** (estructura tipo [rizzet.cl](https://rizzet.cl/), morph de color al hacer scroll).
 
 ## Local
 

@@ -1,6 +1,5 @@
 ---
 import { dj } from '../data/dj';
-import MusicEQ from './MusicEQ.astro';
 ---
 
 <section class="hero" id="inicio" data-act-section="sunset">
@@ -28,22 +27,14 @@ import MusicEQ from './MusicEQ.astro';
         <a class="btn btn--primary" href="#contacto">{dj.ctaPrimary} →</a>
         <a class="btn btn--ghost" href="#reel">{dj.ctaSecondary}</a>
       </div>
-      <div class="hero__eq-wrap reveal">
-        <MusicEQ />
-      </div>
     </div>
-  </div>
-
-  <div class="hero__scroll" aria-hidden="true">
-    <span>Scroll</span>
-    <i></i>
   </div>
 </section>
 
 <style>
   .hero {
     position: relative;
-    min-height: 100svh;
+    min-height: 92svh;
     display: grid;
     align-items: end;
     overflow: hidden;
@@ -62,8 +53,8 @@ import MusicEQ from './MusicEQ.astro';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.06);
-    filter: saturate(1.1) contrast(1.05) brightness(0.88);
+    transform: scale(1.04);
+    filter: saturate(1.05) contrast(1.04) brightness(0.72);
   }
 
   .hero__fallback {
@@ -74,21 +65,26 @@ import MusicEQ from './MusicEQ.astro';
     z-index: 1;
   }
 
+  /* Veil limpio: scrim fuerte detrás del copy, video sigue full-bleed */
   .hero__veil {
     position: absolute;
     inset: 0;
     z-index: 2;
     background:
       linear-gradient(
-        180deg,
-        color-mix(in oklab, var(--bg-deep) 35%, transparent) 0%,
-        color-mix(in oklab, var(--bg-deep) 12%, transparent) 40%,
-        color-mix(in oklab, var(--bg-deep) 62%, transparent) 100%
+        100deg,
+        color-mix(in oklab, var(--bg-deep) 88%, transparent) 0%,
+        color-mix(in oklab, var(--bg-deep) 72%, transparent) 28%,
+        color-mix(in oklab, var(--bg-deep) 32%, transparent) 52%,
+        color-mix(in oklab, var(--bg-deep) 8%, transparent) 72%,
+        transparent 88%
       ),
-      radial-gradient(
-        ellipse at 70% 40%,
-        color-mix(in oklab, var(--accent) 16%, transparent),
-        transparent 55%
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--bg-deep) 55%, transparent) 0%,
+        color-mix(in oklab, var(--bg-deep) 18%, transparent) 32%,
+        color-mix(in oklab, var(--bg-deep) 35%, transparent) 68%,
+        color-mix(in oklab, var(--bg-deep) 82%, transparent) 100%
       );
   }
 
@@ -97,60 +93,35 @@ import MusicEQ from './MusicEQ.astro';
     z-index: 3;
     width: 100%;
     padding-top: clamp(5.5rem, 10vw, 7rem);
-    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    padding-bottom: clamp(2.75rem, 6vw, 4rem);
   }
 
   .hero__copy {
-    max-width: 42rem;
+    max-width: 38rem;
   }
 
   .hero__title {
-    margin: 0 0 0.75rem;
-    font-size: clamp(3rem, 11vw, 6.5rem);
-    line-height: 0.86;
-    letter-spacing: -0.05em;
+    margin: 0 0 0.7rem;
+    font-size: clamp(2.85rem, 10vw, 5.75rem);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
     font-weight: 800;
-    text-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    color: var(--fg);
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
   }
 
   .hero__lead {
-    max-width: 32rem;
-    margin: 0 0 1.15rem;
-    color: var(--fg-muted);
-    font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+    max-width: 30rem;
+    margin: 0 0 1.25rem;
+    color: color-mix(in oklab, var(--fg) 92%, transparent);
+    font-size: clamp(0.98rem, 1.5vw, 1.1rem);
     line-height: 1.55;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .hero__eq-wrap {
-    max-width: 14rem;
-    opacity: 0.9;
-  }
-
-  .hero__scroll {
-    position: absolute;
-    left: clamp(1.25rem, 4vw, 3.5rem);
-    bottom: 1.4rem;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--fg-muted);
-  }
-
-  .hero__scroll i {
-    width: 1px;
-    height: 3rem;
-    background: linear-gradient(180deg, var(--accent), transparent);
-    display: block;
   }
 </style>
